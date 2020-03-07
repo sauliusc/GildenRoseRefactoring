@@ -1,74 +1,39 @@
-﻿using System.Collections.Generic;
+﻿using csharpcore.SellItem;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace csharpcore
 {
     public class GildedRose
     {
-        IList<Item> Items;
-        public GildedRose(IList<Item> Items)
+        IEnumerable<ISellItem> _items;
+
+        public GildedRose(IList<Item> items)
         {
-            this.Items = Items;
+            _items = items.Select(item => ResolveSellItem(item));
         }
 
         public void UpdateQuality()
         {
-            foreach (Item sellItem in Items)
+            foreach (ISellItem sellItem in _items)
             {
-                //ignore sulfuras
-                if (sellItem.Name.Equals("Sulfuras, Hand of Ragnaros"))
-                    continue;
-
-                sellItem.SellIn--;
-
-                switch (sellItem.Name)
-                {
-                    case ("Aged Brie"):
-                        if (CanIncreaseQuality(sellItem))
-                        {
-                            sellItem.Quality++;
-                            if (sellItem.SellIn < 0 && CanIncreaseQuality(sellItem))
-                            {
-                                sellItem.Quality++;
-                            }
-                        }
-                        break;
-                    case ("Backstage passes to a TAFKAL80ETC concert"):
-                        if (sellItem.SellIn < 0)
-                        {
-                            sellItem.Quality = 0;
-                        }
-                        else if (CanIncreaseQuality(sellItem))
-                        {
-                            sellItem.Quality++;
-
-                            if (sellItem.SellIn < 10 && CanIncreaseQuality(sellItem))
-                            {
-                                sellItem.Quality++;
-                            }
-
-                            if (sellItem.SellIn < 5 && CanIncreaseQuality(sellItem))
-                            {
-                                sellItem.Quality++;
-                            }
-                        }
-                        break;
-                    default:
-                        if (sellItem.Quality > 0)
-                        {
-                            sellItem.Quality--;
-                        }
-                        if (sellItem.SellIn < 0 && sellItem.Quality > 0)
-                        {
-                            sellItem.Quality--;
-                        }
-                        break;
-                }
+                sellItem.UpdateQuality();
             }
         }
 
-        private bool CanIncreaseQuality(Item sellItem)
+        private ISellItem ResolveSellItem(Item item)
         {
-            return sellItem.Quality < 50;
+            switch (item.Name)
+            {
+                case "Sulfuras, Hand of Ragnaros":
+                    return new SulfurasItem(item);
+                case "Aged Brie":
+                    return new AgedBrieItem(item);
+                case "Backstage passes to a TAFKAL80ETC concert":
+                    return new BackStageItem(item);
+                default:
+                    return new OrdinarySellItem(item);
+            }
         }
     }
 }
