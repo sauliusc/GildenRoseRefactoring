@@ -10,12 +10,20 @@
         public override void UpdateQuality()
         {
             UpdateSellIn();
+
+            if (SellItem.SellIn < 0 && SellItem.Quality == MinQuality)
+            {
+                return;
+            }
+
             if (SellItem.SellIn < 0)
             {
                 SellItem.Quality = 0;
                 return;
             }
+
             TryIncreaseQuality();
+
             if (SellItem.SellIn < 10)
             {
                 TryIncreaseQuality();

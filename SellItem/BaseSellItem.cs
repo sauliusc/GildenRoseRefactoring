@@ -3,6 +3,9 @@
     public abstract class BaseSellItem : ISellItem
     {
         protected Item SellItem { get; }
+        protected int MinQuality { get; } = 0;
+        protected int MaxQuality { get; } = 50;
+        protected int QualityUpdateStep { get; } = 1;
 
         public BaseSellItem(Item sellItem)
         {
@@ -18,19 +21,19 @@
 
         protected bool CanIncreaseQuality()
         {
-            return SellItem.Quality < 50;
+            return SellItem.Quality < MaxQuality;
         }
 
         protected bool CanDecreaseQuality()
         {
-            return SellItem.Quality > 0;
+            return SellItem.Quality > MinQuality;
         }
 
         protected void TryIncreaseQuality()
         {
             if (CanIncreaseQuality())
             {
-                SellItem.Quality++;
+                SellItem.Quality += QualityUpdateStep;
             }
         }
 
@@ -38,7 +41,7 @@
         {
             if (CanDecreaseQuality())
             {
-                SellItem.Quality--;
+                SellItem.Quality -= QualityUpdateStep;
             }
         }
     }

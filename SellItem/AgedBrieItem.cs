@@ -10,7 +10,14 @@
         public override void UpdateQuality()
         {
             UpdateSellIn();
+
+            if (!CanIncreaseQuality())
+            {
+                return;
+            }
+
             TryIncreaseQuality();
+
             if (SellItem.SellIn < 0)
             {
                 TryIncreaseQuality();

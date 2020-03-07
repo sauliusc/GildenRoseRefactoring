@@ -31,6 +31,8 @@ namespace csharpcore
                     return new AgedBrieItem(item);
                 case "Backstage passes to a TAFKAL80ETC concert":
                     return new BackStageItem(item);
+                case "Conjured Mana Cake":
+                    return new ConjuredManaCakeItem(item); 
                 default:
                     return new OrdinarySellItem(item);
             }

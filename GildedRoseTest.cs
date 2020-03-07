@@ -67,10 +67,10 @@ namespace csharpcore
 
         [Theory]
         //0 sellin corner cases
-        [InlineData(1, 1, 7, Skip = "not implemented")]
-        [InlineData(2, 0, 5, Skip = "not implemented")]
-        [InlineData(3, -1, 1, Skip = "not implemented")]
-        [InlineData(4, -2, 0, Skip = "not implemented")]
+        [InlineData(1, 1, 7)]
+        [InlineData(2, 0, 5)]
+        [InlineData(3, -1, 1)]
+        [InlineData(4, -2, 0)]
         public void ConjuredShouldDecreaseCorrectly(int daysToDecrease, int expectedSellIn, int expectedQuality)
         {
             GeneralSingleProductTest(new Item { Name = "Conjured Mana Cake", SellIn = 2, Quality = 9 }, daysToDecrease, expectedSellIn, expectedQuality);

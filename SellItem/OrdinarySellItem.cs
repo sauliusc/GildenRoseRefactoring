@@ -11,10 +11,15 @@
         public override void UpdateQuality()
         {
             UpdateSellIn();
-            TryDecreaseQuality();
-            if (SellItem.SellIn < 0)
+
+            if (CanDecreaseQuality())
             {
                 TryDecreaseQuality();
+
+                if (SellItem.SellIn < 0)
+                {
+                    TryDecreaseQuality();
+                }
             }
         }
     }
