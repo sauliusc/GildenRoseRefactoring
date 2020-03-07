@@ -20,24 +20,35 @@ namespace csharpcore
 
                 sellItem.SellIn--;
 
-                //increase quality logic
-                if (sellItem.Name.Equals("Aged Brie") || sellItem.Name.Equals("Backstage passes to a TAFKAL80ETC concert"))
+                if (sellItem.Name.Equals("Aged Brie"))
                 {
                     if (CanIncreaseQuality(sellItem))
                     {
-                        sellItem.Quality = sellItem.Quality + 1;
-
-                        if (sellItem.Name.Equals("Backstage passes to a TAFKAL80ETC concert"))
+                        sellItem.Quality++;
+                        if (sellItem.SellIn < 0 && CanIncreaseQuality(sellItem))
                         {
-                            if (sellItem.SellIn < 10 && CanIncreaseQuality(sellItem))
-                            {
-                                sellItem.Quality++;
-                            }
+                            sellItem.Quality++;
+                        }
+                    }
+                }
+                else if (sellItem.Name.Equals("Backstage passes to a TAFKAL80ETC concert"))
+                {
+                    if (sellItem.SellIn < 0)
+                    {
+                        sellItem.Quality = 0;
+                    }
+                    else if (CanIncreaseQuality(sellItem))
+                    {
+                        sellItem.Quality++;
 
-                            if (sellItem.SellIn < 5 && CanIncreaseQuality(sellItem))
-                            {
-                                sellItem.Quality++;
-                            }
+                        if (sellItem.SellIn < 10 && CanIncreaseQuality(sellItem))
+                        {
+                            sellItem.Quality++;
+                        }
+
+                        if (sellItem.SellIn < 5 && CanIncreaseQuality(sellItem))
+                        {
+                            sellItem.Quality++;
                         }
                     }
                 }
@@ -47,32 +58,9 @@ namespace csharpcore
                     {
                         sellItem.Quality--;
                     }
-                }
-
-                //quality changes if SellIn < 0
-                if (sellItem.SellIn < 0)
-                {
-                    if (sellItem.Name.Equals("Aged Brie"))
+                    if (sellItem.SellIn < 0 && sellItem.Quality > 0)
                     {
-                        if (sellItem.Quality < 50)
-                        {
-                            sellItem.Quality++;
-                        }
-                    }
-
-                    else
-                    {
-                        if (sellItem.Name.Equals("Backstage passes to a TAFKAL80ETC concert"))
-                        {
-                            sellItem.Quality = 0;
-                        }
-                        else
-                        {
-                            if (sellItem.Quality > 0)
-                            {
-                                sellItem.Quality--;
-                            } 
-                        }
+                        sellItem.Quality--;
                     }
                 }
             }
