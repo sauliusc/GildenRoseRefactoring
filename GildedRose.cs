@@ -1,8 +1,8 @@
-﻿using csharpcore.SellItem;
+﻿using GildenRose.SellItem;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace csharpcore
+namespace GildenRose
 {
     public class GildedRose
     {
@@ -23,19 +23,14 @@ namespace csharpcore
 
         private ISellItem ResolveSellItem(Item item)
         {
-            switch (item.Name)
+            return item.Name switch
             {
-                case "Sulfuras, Hand of Ragnaros":
-                    return new SulfurasItem(item);
-                case "Aged Brie":
-                    return new AgedBrieItem(item);
-                case "Backstage passes to a TAFKAL80ETC concert":
-                    return new BackStageItem(item);
-                case "Conjured Mana Cake":
-                    return new ConjuredManaCakeItem(item); 
-                default:
-                    return new OrdinarySellItem(item);
-            }
+                "Sulfuras, Hand of Ragnaros" => new SulfurasItem(item),
+                "Aged Brie" => new AgedBrieItem(item),
+                "Backstage passes to a TAFKAL80ETC concert" => new BackStageItem(item),
+                "Conjured Mana Cake" => new ConjuredManaCakeItem(item),
+                _ => new OrdinarySellItem(item),
+            };
         }
     }
 }

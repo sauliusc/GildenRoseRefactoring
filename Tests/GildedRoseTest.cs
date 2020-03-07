@@ -1,9 +1,7 @@
 ﻿using Xunit;
-using System.Collections.Generic;
-using System.Linq;
 using FluentAssertions;
 
-namespace csharpcore
+namespace GildenRose.Tests
 {
     public class GildedRoseTest
     {

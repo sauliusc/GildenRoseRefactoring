@@ -1,4 +1,4 @@
-﻿namespace csharpcore.SellItem
+﻿namespace GildenRose.SellItem
 {
     public class BackStageItem : BaseSellItem
     {
